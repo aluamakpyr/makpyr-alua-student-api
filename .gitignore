@@ -1,0 +1,17 @@
+# Gradle / build output
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# Logs and backups (local only)
+logs/
+backups/
+*.log
+
+# Secrets
+.env
