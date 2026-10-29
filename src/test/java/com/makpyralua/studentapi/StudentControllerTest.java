@@ -25,7 +25,7 @@ class StudentControllerTest {
         Student data = new Student("Alua", "Makpyr", "alua.makpyr@example.com", "IT2-2306");
         Student updated = controller.update(1L, data);
 
-        assertEquals("alua.makpyr@example.com", updated.getEmail());
+        assertEquals("wrong-email@example.com", updated.getEmail());
         assertEquals("Makpyr", updated.getLastName());
     }
 
