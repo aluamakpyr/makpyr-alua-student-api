@@ -7,7 +7,7 @@ Course: DevOps - Midterm
 
 Spring Boot CRUD REST API for students with PostgreSQL, Docker, Docker Compose and Jenkins.
 
-Status: initial version
+Status: stable version on main
 
 ## Changes by Alua Makpyr (feature/makpyr-alua-crud)
 
