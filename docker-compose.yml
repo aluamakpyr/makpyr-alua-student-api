@@ -1,0 +1,44 @@
+name: makpyr-alua-student-api
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: makpyr-alua-postgres
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - makpyr-alua-pgdata:/var/lib/postgresql/data
+    networks:
+      - makpyr-alua-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  app:
+    build: .
+    image: makpyr-alua-student-api:v1.0-makpyr-alua
+    container_name: makpyr-alua-app
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "8081:8081"
+    networks:
+      - makpyr-alua-network
+    restart: unless-stopped
+
+volumes:
+  makpyr-alua-pgdata:
+    name: makpyr-alua-pgdata
+
+networks:
+  makpyr-alua-network:
+    name: makpyr-alua-network
